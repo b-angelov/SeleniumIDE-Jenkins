@@ -12,7 +12,7 @@ pipeline{
         stage("Checkout Code"){
             steps{
                 //Checkout code from GitHub and specify the branch
-                git branch: 'main'; url: 'https://github.com/b-angelov/SeleniumIDE-Jenkins.git';
+                git branch: 'main', url: 'https://github.com/b-angelov/SeleniumIDE-Jenkins.git';
             }
         }
 
@@ -45,14 +45,12 @@ pipeline{
                 bat 'dotnet test SeleniuymIde.sln --logger "trx;LogFileName=TestResult.trx"'
                 }
          }
-
-         post{
-            always{
-                archieveArtifacts artifacts: '**/TestResults/*.trx', allowEmptyArchive: true
-                junit '**/TestResults/*.trx'
-            }
-         }
-
-
     }
+
+     post{
+        always{
+            archieveArtifacts artifacts: '**/TestResults/*.trx', allowEmptyArchive: true
+            junit '**/TestResults/*.trx'
+        }
+     }
 }
