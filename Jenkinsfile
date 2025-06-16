@@ -42,15 +42,15 @@ pipeline{
         stage("Run Test"){
             steps{
                 //Run test using the solution file with loggin
-                bat 'dotnet test SeleniumIde.sln --logger "junit;LogFileName=TestResults.xml"'
+                bat 'dotnet test SeleniumIde.sln --logger "trx;LogFileName=TestResults.trx"'
                 }
          }
     }
 
      post{
         always{
-            archiveArtifacts artifacts: '**/TestResults/*.xml', allowEmptyArchive: true
-            junit '**/TestResults/*.xml'
+            archiveArtifacts artifacts: '**/TestResults/*.trx', allowEmptyArchive: true
+            junit '**/TestResults/*.trx'
         }
      }
 }
